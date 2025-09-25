@@ -1,0 +1,6 @@
+fastapi[standard]
+fastapi-mail
+uvicorn
+dotenv
+python-multipart
+httpx

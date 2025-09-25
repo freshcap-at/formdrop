@@ -1,0 +1,14 @@
+[
+    {
+        "name": "freshcap.at",
+        "client": "dev",
+        "mail": "info@freshcap.at",
+        "form": {
+            "site_key": "asdfsadfasa",
+            "site_key_secret": "asdfsadf",
+            "return_url": "https://www.freshcap.at/?submit=form",
+            "receivers": ["info@freshcap.at"],
+            "subject": "freshcap.at: Neue Formularübertragung"
+        }
+    }
+]

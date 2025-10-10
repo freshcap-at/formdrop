@@ -1,0 +1,64 @@
+---
+services:
+  
+  formdrop:
+    image: ghcr.io/freshcap-at/formdrop:main
+    container_name: "formdrop"
+    networks:
+      - freshcap-net
+    environment:
+      CAP_INSTANCE_URL: "http://localhost:3000/"
+      CAP_CAPTCHA_TOKEN: ""
+      MAIL_USERNAME: "no-reply@freshcap.at"
+      MAIL_PASSWORD: "anypwd"
+      MAIL_FROM: "no-reply@freshcap.at"
+      MAIL_PORT: 587
+      MAIL_SERVER: mail.your-server.de
+      MAIL_FROM_NAME: "webtools by freshcap.at"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:3001/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - formdrop:/code/storage
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=freshcap-net"
+      - "traefik.http.routers.formdrop.entrypoints=https"
+      - "traefik.http.routers.formdrop.rule=(Host(`forms.freshcap.at`))"
+      - "traefik.http.routers.formdrop.tls.certresolver=http"
+      - "traefik.http.services.formdrop.loadbalancer.server.port=3001"
+
+  capjs:
+    image: tiago2/cap:latest
+    container_name: "capjs"
+    networks:
+      - freshcap-net
+    environment:
+      ADMIN_KEY: "myawesomekey"
+      ENABLE_ASSETS_SERVER: "false"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:3000/"]
+      interval: 300s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - capjs:/usr/src/app/.data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=freshcap-net"
+      - "traefik.http.routers.formdrop.entrypoints=https"
+      - "traefik.http.routers.formdrop.rule=(Host(`captcha.freshcap.at`))"
+      - "traefik.http.routers.formdrop.tls.certresolver=http"
+      - "traefik.http.services.formdrop.loadbalancer.server.port=3000"
+
+volumes:
+  certs:
+  formdrop:
+  capjs:
+
+networks:
+  freshcap-net:

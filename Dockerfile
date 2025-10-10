@@ -10,8 +10,8 @@ COPY ./formdrop/app.py /code/app.py
 COPY ./formdrop/templates/submit.html /code/templates/submit.html
 COPY ./formdrop/storage/clients.json /code/storage/clients.json
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt && \
-    pipenv install --system --deploy --clear
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
 EXPOSE 3001
 VOLUME ["/code/storage"]
 

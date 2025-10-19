@@ -9,12 +9,12 @@ services:
     environment:
       CAP_INSTANCE_URL: "http://localhost:3000/"
       CAP_CAPTCHA_TOKEN: ""
-      MAIL_USERNAME: "no-reply@freshcap.at"
+      MAIL_USERNAME: ""
       MAIL_PASSWORD: "anypwd"
-      MAIL_FROM: "no-reply@freshcap.at"
+      MAIL_FROM: "n"
       MAIL_PORT: 587
-      MAIL_SERVER: mail.your-server.de
-      MAIL_FROM_NAME: "webtools by freshcap.at"
+      MAIL_SERVER: 
+      MAIL_FROM_NAME: ""
     restart: always
     ports: 
       - "3001:3001"

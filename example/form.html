@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://www.freshcap.at/assets/freshcap.min.css">
+        <script src="https://unpkg.com/@cap.js/widget"></script>
+    </head>
+    <body>
+          <div class="flex-auto">
+            <form action="http://localhost:3002/dev/submit" method="post">
+              <input type="hidden" name="_returnurl" value="https://www.freshcap.at/?success=true">
+              <input type="hidden" name="_reply" value="E-Mail">
+
+              <div class="flex flex-col gap-3">
+                <div class="grid grid-cols-1">
+                  <label for="name">Name</label>
+                  <input type="text" name="Name" id="name" placeholder="Dein Name" required="" class="font-light rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-freshcap-300 placeholder:text-freshcap-300 focus:ring-2 focus:ring-inset focus:ring-freshcap-500">
+                </div>
+
+                <div class="grid grid-cols-1">
+                  <label for="email">E-Mail</label>
+                  <input type="email" name="E-Mail" id="email" placeholder="E-Mail Adresse" required="" class="font-light rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-freshcap-300 placeholder:text-freshcap-300 focus:ring-2 focus:ring-inset focus:ring-freshcap-500">
+                </div>
+
+                <div class="grid grid-cols-1">
+                  <label for="message">Nachricht</label>
+                  <textarea class="font-light rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-freshcap-300 placeholder:text-freshcap-300 focus:ring-2 focus:ring-inset focus:ring-freshcap-500" id="message" name="Nachricht" rows="4"></textarea>
+                </div>
+
+                <div class="flex gap-4 justify-end">
+                  <input type="checkbox" name="_agreed" value="agreed" class="h-4 w-4 rounded border-freshcap-300 text-freshcap-500 focus:ring-freshcap-500 mt-1">
+                  <label for="_agreed">
+                    Ich stimme den
+                    <a href="/datenschutz/" target="_blank" title="Datenschutz">Datenschutzbedingungen</a>
+                    zu.
+                  </label>
+                </div>
+
+                <cap-widget data-cap-api-endpoint="http://localhost:3000/e2743a6182/"></cap-widget>
+
+                <div class="flex gap-4 justify-end">
+                  <button type="submit" class="py-2 px-5 border border-freshcap-500 bg-freshcap-300 hover:bg-freshcap-500 hover:border-freshcap-700 rounded-sm text-black disabled:bg-freshcap-200 disabled:border-freshcap-300 disabled:cursor-not-allowed disabled:text-freshcap-600">
+                    Absenden
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          
+        </div>
+    </body>
+</html>

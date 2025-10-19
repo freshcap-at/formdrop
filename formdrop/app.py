@@ -10,11 +10,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from httpx import AsyncClient
 
-
-load_dotenv()
+ENV_FILE = '.env' if not os.path.isfile(os.path.join(os.path.dirname(__file__), '.env-local')) else '.env-local'
+load_dotenv(os.path.join(os.path.dirname(__file__), ENV_FILE))
 
 CAP_INSTANCE_URL = os.getenv('CAP_INSTANCE_URL')
-CAP_CAPTCHA_TOKEN = os.getenv('captcha_token')
+CAP_CAPTCHA_TOKEN = os.getenv('CAP_CAPTCHA_TOKEN', default='cap-token')
 
 MAIL_CONF = ConnectionConfig(
     MAIL_USERNAME=os.getenv('MAIL_USERNAME'),
@@ -28,6 +28,8 @@ MAIL_CONF = ConnectionConfig(
     USE_CREDENTIALS=True,
     TEMPLATE_FOLDER='./templates'
 )
+
+CLIENTS_FILE = os.getenv('CLIENTS_FILE', default='clients.json')
 
 app = FastAPI()
 app.add_middleware(
@@ -94,15 +96,17 @@ async def post_submit(code: str, request: Request):
 
 
 def get_client(code: str):
-    with open('storage/clients.json', encoding="utf-8") as json_file:
+    with open(os.path.join(os.path.dirname(__file__),'storage/', CLIENTS_FILE), encoding="utf-8") as json_file:
         clients = json.load(json_file)
         return next(iter(list(filter(lambda c: c['client'] == code, clients))), None)
 
 
 async def check_captcha(captcha_token: str, site_key: str, site_key_secret: str):
     async with AsyncClient() as client:
-        response = await client.get(CAP_INSTANCE_URL + site_key + "/siteverify",
-            data={"secret": site_key_secret, "response": captcha_token},
+        url = CAP_INSTANCE_URL + site_key + "/siteverify"
+        response = await client.post(
+            url=url,
+            json={"secret": site_key_secret, "response": captcha_token},
             headers={"Content-Type": "application/json"})
         validation = response.json()
         if validation.get('success', False):
@@ -110,5 +114,5 @@ async def check_captcha(captcha_token: str, site_key: str, site_key_secret: str)
     return False
 
         
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=3001)
+#if __name__ == "__main__":
+#    uvicorn.run(app, host="0.0.0.0", port=3002)

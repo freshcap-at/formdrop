@@ -59,11 +59,11 @@ services:
     environment:
       CAP_INSTANCE_URL: "https://captcha.freshcap.at/"
       CAP_CAPTCHA_TOKEN: ""
-      MAIL_USERNAME: "no-reply@freshcap.at"
+      MAIL_USERNAME: ""
       MAIL_PASSWORD: "anypwd"
-      MAIL_FROM: "no-reply@freshcap.at"
+      MAIL_FROM: ""
       MAIL_PORT: 587
-      MAIL_SERVER: mail.your-server.de
+      MAIL_SERVER: 
       MAIL_FROM_NAME: "webtools by freshcap.at"
     restart: always
     healthcheck:

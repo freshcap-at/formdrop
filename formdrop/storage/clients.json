@@ -1,14 +1,14 @@
 [
     {
-        "name": "freshcap.at",
-        "client": "dev",
-        "mail": "info@freshcap.at",
+        "name": "someclient.net",
+        "client": "client",
+        "mail": "themail@example.com",
         "form": {
-            "site_key": "asdfsadfasa",
-            "site_key_secret": "asdfsadf",
-            "return_url": "https://www.freshcap.at/?submit=form",
-            "receivers": ["info@freshcap.at"],
-            "subject": "freshcap.at: Neue Formularübertragung"
+            "site_key": "capjs site key",
+            "site_key_secret": "capjs site secret",
+            "return_url": "https://www.google.com",
+            "receivers": ["receiver1@@example.com"],
+            "subject": "somclient.net: Neue Formularübertragung"
         }
     }
 ]

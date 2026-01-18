@@ -9,6 +9,10 @@
             "return_url": "https://www.google.com",
             "receivers": ["receiver1@@example.com"],
             "subject": "somclient.net: Neue Formularübertragung"
+        },
+        "webhook": {
+            "enabled": true,
+            "url": "https://example.com"
         }
     }
 ]

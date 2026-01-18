@@ -1,6 +1,7 @@
 import uvicorn
 import json
 import os
+import httpx 
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
@@ -92,6 +93,22 @@ async def post_submit(code: str, request: Request):
 
     fm = FastMail(MAIL_CONF)
     await fm.send_message(message, template_name='submit.html')
+
+
+    if "webhook" in client.keys():
+
+        if client['webhook']['enabled']:
+            url = client['webhook']['url'] 
+            payload = { 
+                "subject": subject, 
+                "name": client['name']
+            }
+            for key, val in form.items():
+                payload["key"] = val
+        
+        async with httpx.AsyncClient() as client: 
+            response = await client.post(url, json=payload)
+
     return RedirectResponse(returnurl)
 
 
